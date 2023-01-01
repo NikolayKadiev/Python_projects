@@ -2,8 +2,6 @@ from tkinter import *
 from tkinter import filedialog
 import matplotlib.pyplot as plt
 
-fig, ax = plt.subplots(figsize=(10, 5))
-fig.subplots_adjust(bottom=0.1, left=0.1)
 
 y1 = []
 
@@ -21,6 +19,8 @@ def readFile():
 
 
 def plotFile():
+    fig, ax = plt.subplots(figsize=(10, 5))
+    fig.subplots_adjust(bottom=0.1, left=0.1)
     plt.cla()
     ax.plot(y1)
     ax.set_xlabel('time [ms]')
