@@ -17,7 +17,7 @@ def printSlide():
     print('Slide 2 = ' + str(serv2))
     print('Slide 3 = ' + str(serv3))
     print(' ')
-    comm_serial.write(b'o')
+    comm_serial.write(b's')
     comm_serial.write((serv1 >> 8).to_bytes(1, 'little'))
     comm_serial.write((serv1 & 0xff).to_bytes(1, 'little'))
     comm_serial.write((serv2 >> 8).to_bytes(1, 'little'))
