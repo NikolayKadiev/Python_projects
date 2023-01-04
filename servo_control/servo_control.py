@@ -1,12 +1,12 @@
 from tkinter import *
 import serial
+import serial.tools.list_ports
 
 comm_serial = 0
 
-
 def openPort():
     global comm_serial
-    comm_serial = serial.Serial(portEntry.get(), 115200)
+    comm_serial = serial.Serial(com_avail.get(), 115200)
 
 
 def printSlide():
@@ -27,13 +27,18 @@ def printSlide():
 
 
 if __name__ == "__main__":
+    comms = []
+    ports = serial.tools.list_ports.comports()
+    for port, desc, hwid in sorted(ports):
+        comms.append(port)
+
     view = Tk()
     view.geometry('400x220')
     view.title("Servo Control")
 
     slide1 = Scale(view, from_=1000, to=4800, orient=HORIZONTAL, length=390, showvalue=FALSE)
-    slide2 = Scale(view, from_=1000, to=4758, orient=HORIZONTAL, length=390, showvalue=FALSE)
-    slide3 = Scale(view, from_=1000, to=4758, orient=HORIZONTAL, length=390, showvalue=FALSE)
+    slide2 = Scale(view, from_=1000, to=4800, orient=HORIZONTAL, length=390, showvalue=FALSE)
+    slide3 = Scale(view, from_=1000, to=4800, orient=HORIZONTAL, length=390, showvalue=FALSE)
 
     butt1 = Button(view, text='Send data', command=printSlide)
     butt2 = Button(view, text='Open Port', command=openPort)
@@ -41,9 +46,11 @@ if __name__ == "__main__":
     label1 = Label(view, text='Servo 1')
     label2 = Label(view, text='Servo 2')
     label3 = Label(view, text='Servo 3')
-    portEntry = Entry(view, width=20)
 
-    portEntry.grid(row=1)
+    com_avail = StringVar()
+    drop = OptionMenu(view, com_avail, *comms)
+    drop.grid(row=1)
+
     butt2.grid(row=2)
 
     label1.grid(row=3)
