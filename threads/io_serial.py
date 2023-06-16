@@ -12,7 +12,7 @@ specs = [0x1A, 0x18, 0x03, 0x16, 0X13, 0x01, 0x1B, 0x5B, 0x41, 0x1B, 0x5B, 0x42]
 
 def openPort():
     global comm_serial
-    comm_serial = serial.Serial(com_avail.get(), 115200)
+    comm_serial = serial.Serial(com_avail.get(), com_baud.get())
     startLock.release()
 
 
@@ -60,6 +60,9 @@ def inCom():
             line_in = comm_serial.readline()
         text_in.insert(tk.END, line_in)
 
+def clrBox():
+    text_in.delete(1.0, tk.END)
+
 
 if __name__ == "__main__":
     comms = []
@@ -82,6 +85,14 @@ if __name__ == "__main__":
     butt3 = tk.Button(view, text='Open Port', command=openPort)
     drop.grid(row=1)
     butt3.grid(row=2)
+    options = [4800, 9600, 115200, 921600]
+    com_baud = tk.IntVar()
+    com_baud.set(options[1])
+    baud_drop = tk.OptionMenu(view, com_baud, *options)
+    baud_drop.grid(column=1, row=1)
+
+    butt_clr = tk.Button(view, text='Clear text', command=clrBox)
+    butt_clr.grid(column=1, row=2)
 
     label1 = tk.Label(view, text='Open file')
     butt1 = tk.Button(view, text='Choose file', command=readFile)
