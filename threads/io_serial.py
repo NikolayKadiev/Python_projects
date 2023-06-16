@@ -36,9 +36,9 @@ def sendFile():
 
 def onKeyPress(event):
     global comm_serial
-    kaor = str(text_out.get(1.0, tk.END))[:-1]
+    kaor = str(text_out.get()) + '\n'
     comm_serial.write(kaor.encode())
-    text_out.delete(1.0, tk.END)
+    text_out.delete(0, tk.END)
 
 
 def specPress(value):
@@ -51,6 +51,10 @@ def specPress(value):
         comm_serial.write(specs[value].to_bytes(length=1, byteorder='little'))
 
 
+def clrBox():
+    text_in.delete(1.0, tk.END)
+
+
 def inCom():
     startLock.acquire(blocking=True)
     while True:
@@ -59,9 +63,6 @@ def inCom():
         while comm_serial.inWaiting() > 0:
             line_in = comm_serial.readline()
         text_in.insert(tk.END, line_in)
-
-def clrBox():
-    text_in.delete(1.0, tk.END)
 
 
 if __name__ == "__main__":
@@ -104,7 +105,7 @@ if __name__ == "__main__":
     label2.grid(column=3, row=1)
     butt2.grid(column=3, row=2)
 
-    text_out = tk.Text(view, height=1, width=50)
+    text_out = tk.Entry(view, width=50)
     text_out.grid(column=0, row=5, columnspan=4)
     text_out.bind('<Return>', onKeyPress)
 
