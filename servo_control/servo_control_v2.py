@@ -3,7 +3,7 @@ from tkinter import *
 import serial
 import serial.tools.list_ports
 
-servo_start_pos = 820
+servo_start_pos = 515
 servo_end_pos = 2048
 comm_serial = 0
 
